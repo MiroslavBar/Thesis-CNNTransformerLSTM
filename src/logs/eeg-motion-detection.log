@@ -80,3 +80,71 @@
 2025-03-13 15:50:55,679 [INFO] Running classification on data set of shape (360, 64, 20, 700), using CNNTransformerLSTM classifier.
 2025-03-13 15:50:59,342 [INFO] Serializing object for CNNTransformerLSTM to trained_models/CNNTransformerLSTM/CNNTransformerLSTM_scaler_time_frequency_binary.pkl.
 2025-03-13 15:50:59,370 [INFO] Cross validation fold: 1/10.
+2025-03-29 10:10:17,015 [INFO] Reading configuration from C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\config.ini.
+2025-03-29 10:10:19,061 [INFO] Reading configuration from C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\config.ini.
+2025-03-29 10:10:19,065 [INFO] Classification type is set to binary (movement vs resting).
+2025-03-29 10:10:19,065 [INFO] Loading and preprocessing input data.
+2025-03-29 10:11:01,838 [INFO] Reading configuration from C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\config.ini.
+2025-03-29 10:11:03,826 [INFO] Reading configuration from C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\config.ini.
+2025-03-29 10:11:03,836 [INFO] Classification type is set to binary (movement vs resting).
+2025-03-29 10:11:17,893 [INFO] Loading and preprocessing input data.
+2025-03-29 10:17:30,723 [INFO] Reading configuration from C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\config.ini.
+2025-03-29 10:18:11,806 [INFO] Reading configuration from C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\config.ini.
+2025-03-29 10:20:55,675 [INFO] Reading configuration from C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\config.ini.
+2025-03-29 10:20:56,516 [INFO] Reading configuration from C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\config.ini.
+2025-03-29 10:20:56,521 [INFO] Classification type is set to binary (movement vs resting).
+2025-03-29 10:20:56,521 [INFO] Loading and preprocessing input data.
+2025-03-29 10:21:46,232 [INFO] Reading configuration from C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\config.ini.
+2025-03-29 10:22:51,584 [INFO] Reading configuration from C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\config.ini.
+2025-03-29 10:23:17,454 [INFO] Reading configuration from C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\config.ini.
+2025-03-29 10:23:19,413 [INFO] Reading configuration from C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\config.ini.
+2025-03-29 10:23:19,417 [INFO] Classification type is set to binary (movement vs resting).
+2025-03-29 10:23:19,417 [INFO] Loading and preprocessing input data.
+2025-03-29 10:24:25,423 [INFO] Reading configuration from C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\config.ini.
+2025-03-29 10:26:08,151 [INFO] Reading configuration from C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\config.ini.
+2025-03-29 10:26:08,155 [INFO] Classification type is set to binary (movement vs resting).
+2025-03-29 10:26:13,080 [INFO] Loading and preprocessing input data.
+2025-03-29 10:26:43,998 [INFO] Reading configuration from C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\config.ini.
+2025-03-29 10:26:45,910 [INFO] Reading configuration from C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\config.ini.
+2025-03-29 10:26:45,916 [INFO] Classification type is set to binary (movement vs resting).
+2025-03-29 10:26:45,916 [INFO] Loading and preprocessing input data.
+2025-03-29 10:27:28,955 [INFO] Reading configuration from C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\config.ini.
+2025-03-29 10:27:30,910 [INFO] Reading configuration from C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\config.ini.
+2025-03-29 10:27:30,914 [INFO] Classification type is set to binary (movement vs resting).
+2025-03-29 10:27:30,914 [INFO] Loading and preprocessing input data.
+2025-03-29 10:35:34,041 [INFO] Reading configuration from C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\config.ini.
+2025-03-29 10:35:36,122 [INFO] Reading configuration from C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\config.ini.
+2025-03-29 10:35:36,126 [INFO] Classification type is set to binary (movement vs resting).
+2025-03-29 10:35:36,126 [INFO] Loading and preprocessing input data.
+2025-03-29 10:36:06,220 [INFO] Reading configuration from C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\config.ini.
+2025-03-29 10:36:06,424 [INFO] Reading configuration from C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\config.ini.
+2025-03-29 10:36:06,428 [INFO] Classification type is set to binary (movement vs resting).
+2025-03-29 10:36:06,428 [INFO] Loading and preprocessing input data.
+2025-03-29 10:36:55,027 [INFO] Reading configuration from C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\config.ini.
+2025-03-29 10:36:56,059 [INFO] Reading configuration from C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\config.ini.
+2025-03-29 10:36:56,062 [INFO] Classification type is set to binary (movement vs resting).
+2025-03-29 10:36:56,062 [INFO] Loading and preprocessing input data.
+2025-03-29 10:37:42,547 [INFO] Reading configuration from C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\config.ini.
+2025-03-29 10:37:43,536 [INFO] Reading configuration from C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\config.ini.
+2025-03-29 10:37:43,539 [INFO] Classification type is set to binary (movement vs resting).
+2025-03-29 10:37:43,539 [INFO] Loading and preprocessing input data.
+2025-03-29 10:49:39,475 [INFO] Reading configuration from C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\103-config.ini.
+2025-03-29 10:49:41,650 [INFO] Reading configuration from C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\103-config.ini.
+2025-03-29 10:49:41,654 [INFO] Classification type is set to binary (movement vs resting).
+2025-03-29 10:49:41,654 [INFO] Loading and preprocessing input data.
+2025-03-29 13:50:43,307 [INFO] Reading configuration from C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\competition-config.ini.
+2025-03-29 13:50:43,311 [ERROR] Required option num_samples is missing for section Other in configuration file C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\competition-config.ini!
+2025-03-29 13:53:49,041 [INFO] Reading configuration from C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\competition-config.ini.
+2025-03-29 13:53:49,044 [ERROR] Required option num_samples is missing for section Other in configuration file C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\competition-config.ini!
+2025-03-29 13:54:28,616 [INFO] Reading configuration from C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\competition-config.ini.
+2025-03-29 13:54:28,620 [ERROR] Required option num_samples is missing for section Other in configuration file C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\competition-config.ini!
+2025-03-29 13:55:42,244 [INFO] Reading configuration from C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\competition-config.ini.
+2025-03-29 13:55:42,251 [ERROR] Required option num_samples is missing for section Other in configuration file C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\competition-config.ini!
+2025-03-29 13:58:42,786 [INFO] Reading configuration from C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\competition-config.ini.
+2025-03-29 14:00:56,100 [INFO] Reading configuration from C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\competition-config.ini.
+2025-03-29 14:01:10,814 [INFO] Reading configuration from C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\competition-config.ini.
+2025-03-29 14:01:10,815 [ERROR] Required option label_conversion is missing for section Other in configuration file C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\competition-config.ini!
+2025-03-29 14:01:53,783 [INFO] Reading configuration from C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\competition-config.ini.
+2025-03-29 14:01:57,155 [INFO] Reading configuration from C:\FAV\FAV\3.rocnik\bakalarka\Thien_model\CNNTransformerLSTM-main\CNNTransformerLSTM-main\src\competition-config.ini.
+2025-03-29 14:01:57,159 [INFO] Classification type is set to binary (movement vs resting).
+2025-03-29 14:01:57,159 [INFO] Loading and preprocessing input data.

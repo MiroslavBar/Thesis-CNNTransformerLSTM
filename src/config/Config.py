@@ -59,6 +59,9 @@ class Config:
         self.deterministic = False
         self.save_plots = True
         self.save_load_preprocessed_data = True
+        self.num_samples = 700
+        self.label_conversion = "two_class_ME"
+        self.sfreq = 500
 
         # Internal configuration, not read from a config file
         self.parser = None
@@ -178,6 +181,10 @@ class Config:
         self.deterministic = self._get_bool(section, 'deterministic')
         self._set_deterministic()
         self.save_load_preprocessed_data = self._get_bool(section, 'save_load_preprocessed_data')
+        self.num_samples = self._get_int(section, 'num_samples')
+        self.label_conversion = self._get_str(section, 'label_conversion')
+        self.sfreq = self._get_float(section, 'sfreq')
+        self.data_dir = self._get_str(section, 'data_dir')
 
     def _set_deterministic(self) -> None:
         if not self.deterministic:
@@ -196,6 +203,11 @@ class Config:
     def _get_int(self, section: str, option: str) -> int:
         self._assert_exists_option(section, option)
         return self.parser.getint(section, option)
+
+    def _get_str(self, section: str, option: str) -> str:
+        self._assert_exists_option(section, option)
+        return self.parser.get(section, option)
+
 
     def _get_float(self, section: str, option: str) -> float:
         self._assert_exists_option(section, option)

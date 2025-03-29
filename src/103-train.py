@@ -1,7 +1,9 @@
 import logging as log
 import os
+import random
 import time
 from collections import defaultdict
+from typing import Optional, Callable, Tuple, Any
 
 import mne
 import numpy as np
@@ -12,24 +14,79 @@ from augmentation.AugmentationMetrics import AugmentationMetrics
 from classification.ClassificationMetrics import ClassificationMetrics
 from classification.Classifier import Classifier
 from config.Config import config
-from preprocessing import preprocessing
-from utils import visualization, file_utils
+from utils import file_utils
 
-
-# Load CSV Data
 def load_csv_data(file_path):
     return np.loadtxt(file_path, delimiter=',')
 
-# Convert Labels (Modify this for your specific dataset)
-def convert_label(label):
-    return two_class_labels(label)
+def label_conversion_map(conversion_type: str) -> Optional[Callable[[int], Optional[int]]]:
+    """
+    Returns the appropriate label conversion function based on configuration.
 
-def two_class_labels(label):
+    Args:
+        conversion_type: The type of label conversion to apply.
+
+    Returns:
+        Optional function to convert labels or None if not found.
+    """
+    conversion_functions = {
+        'two_class_ME': two_class_ME_labels,
+        'two_class_MI': two_class_MI_labels,
+        'four_class_ME': four_class_ME_labels,
+        'four_class_MI': four_class_MI_labels,
+        'two_class_labels': two_class_labels,
+        'four_class_labels': four_class_labels
+    }
+    return conversion_functions.get(conversion_type)
+
+
+def two_class_labels(label: int) -> Optional[int]:
     if label in [2, 3, 5, 6, 8, 9, 11, 12]: return 0  # Movement
     if label in [1, 4, 7, 10]: return 1  # Relax
-    return None  # Exclude other labels
+    return None
 
-# Get unique subjects from filenames
+
+def two_class_MI_labels(label: int) -> Optional[int]:
+    if label in [5, 6, 11, 12]: return 0  # MI Movement
+    if label in [4, 10]: return 1  # MI Relax
+    return None
+
+
+def two_class_ME_labels(label: int) -> Optional[int]:
+    if label in [2, 3, 8, 9]: return 0  # ME Movement
+    if label in [1, 7]: return 1  # ME Relax
+    return None
+
+
+def four_class_MI_labels(label: int) -> Optional[int]:
+    if label in [5]: return 0  # MI left fist movement
+    if label in [6]: return 1  # MI right first movement
+    if label in [12]: return 2  # MI both feet movement
+    if label in [4, 10]:
+        if random.randint(1, 4) == 4:  # Reducing the amount of rest trials to balance the data
+            return 3  # MI relax
+    return None
+
+
+def four_class_ME_labels(label: int) -> Optional[int]:
+    if label in [2]: return 0  # ME left fist movement
+    if label in [3]: return 1  # ME right first movement
+    if label in [9]: return 2  # ME both feet movement
+    if label in [1, 7]:
+        if random.randint(1, 4) == 4:  # Reducing the amount of rest trials to balance the data
+            return 3  # ME relax
+    return None
+
+
+def four_class_labels(label: int) -> Optional[int]:
+    if label in [2, 5]: return 0  # Left first movement
+    if label in [3, 6]: return 1  # Right first movement
+    if label in [9, 12]: return 2  # Both feet movement
+    if label in [1, 4, 7, 10]:
+        if random.randint(1, 4) == 4:  # Reducing the amount of rest trials to balance the data
+            return 3  # Relax
+    return None
+
 def get_subjects(csv_dir):
     subject_ids = set()
     for file in os.listdir(csv_dir):
@@ -39,16 +96,18 @@ def get_subjects(csv_dir):
     return sorted(subject_ids)
 
 
-# Compute Time-Frequency Representation using Morlet wavelets
-def compute_tfr(eeg_data, sfreq, freqs, n_cycles):
+def compute_tfr(eeg_data: np.ndarray, sfreq: float, freqs: np.ndarray, n_cycles: np.ndarray) -> np.ndarray:
     """
-    Compute Time-Frequency Representation using Morlet wavelets.
+     Compute Time-Frequency Representation using Morlet wavelets.
 
-    :param eeg_data: EEG signal (n_samples, n_channels)
-    :param sfreq: Sampling frequency
-    :param freqs: List of frequencies to analyze
-    :param n_cycles: Number of cycles per frequency
-    :return: Time-Frequency representation (n_channels, n_frequencies, n_times)
+    Args:
+        eeg_data: EEG signal (n_channels, n_samples)
+        sfreq: Sampling frequency
+        freqs: List of frequencies to analyze
+        n_cycles: Number of cycles per frequency
+
+    Returns:
+        Time-Frequency representation (n_channels, n_frequencies, n_times))
     """
     eeg_data = eeg_data[np.newaxis, :, :]  # Reshape to (1, n_channels, n_samples)
 
@@ -57,11 +116,31 @@ def compute_tfr(eeg_data, sfreq, freqs, n_cycles):
 
     return tfr[0]  # Remove extra dimension
 
-# Process a single subject
-def preprocess_subject(csv_dir, subject_id, num_samples=700, sfreq=500, freqs=np.linspace(1, 40, 20)):
-    """Preprocess and return subject data in time-frequency format."""
+
+def preprocess_subject(
+        csv_dir: str,
+        subject_id: str,
+        config: Any,
+        freqs: np.ndarray = np.linspace(1, 40, 20)
+) -> Tuple[Optional[np.ndarray], Optional[np.ndarray]]:
+    """
+    Preprocess a single subject's data and convert to time-frequency format.
+
+    Args:
+        csv_dir: Directory containing CSV files
+        subject_id: ID of the subject to process
+        config: Configuration object containing processing parameters
+        freqs: Frequencies to use for time-frequency analysis
+
+    Returns:
+        Tuple of (processed_data, labels) or (None, None) if processing fails
+    """
     signal_files = sorted([f for f in os.listdir(csv_dir) if f'SUB_{subject_id}_SIG' in f])
     annotation_files = sorted([f for f in os.listdir(csv_dir) if f'SUB_{subject_id}_ANN' in f])
+    num_samples = config.num_samples
+    conversion_type = config.label_conversion
+    sfreq = config.sfreq
+    convert_label = label_conversion_map(conversion_type)
 
     if len(signal_files) != len(annotation_files):
         print(f"Mismatch for subject {subject_id}")
@@ -110,15 +189,29 @@ def preprocess_subject(csv_dir, subject_id, num_samples=700, sfreq=500, freqs=np
 
     return all_data, all_labels
 
-# Process the full dataset
-def load_dataset(csv_dir, num_samples=700, sfreq=500, freqs=np.linspace(1, 40, 20)):
-    """Loads all subjects and returns a dataset in time-frequency format."""
+def load_dataset(
+    csv_dir: str,
+    config: Any,
+    freqs: np.ndarray = np.linspace(1, 40, 20)
+) -> Tuple[Optional[np.ndarray], Optional[np.ndarray]]:
+    """
+    Load the complete dataset for all subjects.
+
+    Args:
+        csv_dir: Directory containing CSV files
+        config: Configuration object containing processing parameters
+        freqs: Frequencies to use for time-frequency analysis
+
+    Returns:
+        Tuple of (processed_data, labels) where data is in time-frequency format,
+        or (None, None) if processing fails
+    """
     all_subjects_data = []
     all_subjects_labels = []
 
     subjects = get_subjects(csv_dir)
-    for subject_id in range(1,2):
-        data, labels = preprocess_subject(csv_dir, "001", num_samples, sfreq, freqs)
+    for subject_id in subjects:
+        data, labels = preprocess_subject(csv_dir, subject_id, config, freqs)
         if data is not None and labels is not None:
             all_subjects_data.append(data)  # Shape: (n_samples, n_channels, n_frequencies, n_times)
             all_subjects_labels.append(labels)
@@ -184,23 +277,13 @@ def _inter_subject_model(data: np.ndarray, labels: np.ndarray) -> None:
     ClassificationMetrics.merge(classification_metrics_per_classifier).report(config.classification_metrics)
 
 
-
-
-
-
-
-def main():
-
-    CSV_DIR = "C:\FAV\FAV\\3.rocnik\\bakalarka\Thienuv_navrh\\103_data\eegmmidb"
+def main() -> None:
     log.info(config)
     start_time = time.perf_counter()
     log.info(f"Loading and preprocessing input data.")
-    data, labels = load_dataset(CSV_DIR)
+    data, labels = load_dataset(config.data_dir, config)
     log.info(f"Preprocessing took {_format_execution_time(start_time, time.perf_counter())}.")
-
-    # _personal_models(data, labels)
     data, labels = np.concatenate(data), np.concatenate(labels)
-    # visualization.plot_input_data_tsne(data, labels)
     _inter_subject_model(data, labels)
 
     log.info(f"Total execution time {_format_execution_time(start_time, time.perf_counter())}.")
@@ -208,9 +291,5 @@ def main():
     if config.save_plots:
         log.info(f"All image output has been saved to {os.getcwd()}/{file_utils.IMAGES_OUTPUT_FOLDER}.")
 
-
-
-# import multiprocessing  #TODO tohle odmazat na fav gpu
-# multiprocessing.set_start_method("spawn") #TODO tohle odmazat na fav gpu
 if __name__ == '__main__':
     main()

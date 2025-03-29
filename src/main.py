@@ -85,8 +85,5 @@ def main():
         log.info(f"All image output has been saved to {os.getcwd()}/{file_utils.IMAGES_OUTPUT_FOLDER}.")
 
 
-
-# import multiprocessing  #TODO tohle odmazat na fav gpu
-# multiprocessing.set_start_method("spawn") #TODO tohle odmazat na fav gpu
 if __name__ == '__main__':
     main()

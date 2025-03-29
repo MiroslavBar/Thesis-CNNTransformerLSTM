@@ -22,7 +22,7 @@ from src.preprocessing.DataRepresentation import DataRepresentation
 from src.preprocessing.NDScaler import NDScaler
 from src.utils import file_manager
 
-
+R
 class CNNTransformerLSTM(KerasClassifier):
 
     def _create_model(self, input_shape: tuple, num_classes: int) -> Model:

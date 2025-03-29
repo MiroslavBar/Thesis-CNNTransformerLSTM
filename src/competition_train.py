@@ -1,3 +1,5 @@
+from typing import Tuple, Any
+
 import numpy as np
 import os
 import mne
@@ -12,7 +14,7 @@ from augmentation.AugmentationMetrics import AugmentationMetrics
 from classification.ClassificationMetrics import ClassificationMetrics
 from classification.Classifier import Classifier
 from config.Config import config
-from utils import visualization, file_utils
+from utils import file_utils
 
 
 
@@ -67,8 +69,17 @@ def _inter_subject_model(data: np.ndarray, labels: np.ndarray) -> None:
     ClassificationMetrics.merge(classification_metrics_per_classifier).report(config.classification_metrics)
 
 
-def load_BCI42_data(dataset_path, data_file):
-    """ Load EEG data and labels from .npy files """
+def load_BCI42_data(dataset_path: str, data_file: str) -> Tuple[np.ndarray, np.ndarray]:
+    """
+    Load EEG data and labels from .npy files for BCI Competition IV dataset 2a.
+
+    Args:
+        dataset_path: Path to the dataset directory
+        data_file: Base filename (without extension)
+
+    Returns:
+        Tuple containing EEG data array and corresponding labels
+    """
     data_path = os.path.join(dataset_path, data_file + '_data.npy')
     label_path = os.path.join(dataset_path, data_file + '_label.npy')
 
@@ -85,35 +96,45 @@ def load_BCI42_data(dataset_path, data_file):
 
     return data, label
 
-def shuffle_data(data, label):
-    """ Shuffle the dataset randomly """
+def shuffle_data(data: np.ndarray, label: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
     index = np.arange(len(data))
     np.random.shuffle(index)
     return data[index], label[index]
 
-def compute_tfr(eeg_data, sfreq, freqs, n_cycles):
+def compute_tfr(eeg_data: np.ndarray, sfreq: float, freqs: np.ndarray, n_cycles: np.ndarray) -> np.ndarray:
     """
-    Compute Time-Frequency Representation using Morlet wavelets.
+     Compute Time-Frequency Representation using Morlet wavelets.
 
-    :param eeg_data: EEG signal (n_samples, n_channels, n_times)
-    :param sfreq: Sampling frequency
-    :param freqs: List of frequencies to analyze
-    :param n_cycles: Number of cycles per frequency
-    :return: Time-Frequency representation (n_samples, n_channels, n_frequencies, n_times)
+    Args:
+        eeg_data: EEG signal (n_channels, n_samples)
+        sfreq: Sampling frequency
+        freqs: List of frequencies to analyze
+        n_cycles: Number of cycles per frequency
+
+    Returns:
+        Time-Frequency representation (n_channels, n_frequencies, n_times))
     """
-    # eeg_data = eeg_data[:, np.newaxis, :, :]  # Reshape to (n_samples, 1, n_channels, n_times)
     tfr = mne.time_frequency.tfr_array_morlet(eeg_data, sfreq=sfreq, freqs=freqs, n_cycles=n_cycles, output='power')
-    return np.array(tfr.squeeze(), dtype=np.float32) #TODO tohle tam bylo puvodne
+    return np.array(tfr.squeeze(), dtype=np.float32)
 
-def load_all_data(data_path, frequencies, sampling_rate, n_cycles):
+
+def load_all_data(
+        data_path: str,
+        frequencies: np.ndarray,
+        sampling_rate: float,
+        n_cycles: np.ndarray
+) -> tuple[np.ndarray[Any, np.dtype], np.ndarray[Any, np.dtype]]:
     """
     Loads and transforms EEG data from multiple subjects using Morlet wavelet transformation.
 
-    :param data_path: Path to the dataset folder.
-    :param frequencies: List of frequencies for wavelet decomposition.
-    :param sampling_rate: Sampling rate of the EEG data.
-    :param n_cycles: Number of cycles per frequency.
-    :return: Tuple (all_data, all_labels)
+    Args:
+        data_path: Path to the dataset folder
+        frequencies: List of frequencies for wavelet decomposition
+        sampling_rate: Sampling rate of the EEG data in Hz
+        n_cycles: Number of cycles per frequency
+
+    Returns:
+        Tuple (all_data, all_labels) containing lists of transformed data and labels per subject
     """
     all_data = []
     all_labels = []
@@ -140,22 +161,18 @@ def load_all_data(data_path, frequencies, sampling_rate, n_cycles):
 
     return all_data, all_labels
 
-def main():
+def main() -> None:
     log.info(config)
     start_time = time.perf_counter()
     log.info(f"Loading and preprocessing input data.")
 
-    # data_path = "../../competition_dataset/bci_iv_2a"
-    data_path = "/auto/plzen1/home/mbartik/Thienuv_model/competition_preprocessed"
-    sampling_rate = 250  # Adjust based on dataset
     frequencies = np.linspace(1, 40, 20)  # Define 20 frequency bands from 1Hz to 40Hz
     n_cycles = frequencies / 2
 
-    data, labels = load_all_data(data_path, frequencies, sampling_rate, n_cycles)
+    data, labels = load_all_data(config.data_dir, frequencies, config.sfreq, n_cycles)
     log.info(f"Preprocessing took {_format_execution_time(start_time, time.perf_counter())}.")
 
     data, labels = np.concatenate(data), np.concatenate(labels)
-    # visualization.plot_input_data_tsne(data, labels)
     _inter_subject_model(data, labels)
 
     log.info(f"Total execution time {_format_execution_time(start_time, time.perf_counter())}.")
@@ -164,10 +181,8 @@ def main():
         log.info(f"All image output has been saved to {os.getcwd()}/{file_utils.IMAGES_OUTPUT_FOLDER}.")
 
 
-    print(f"Final Data Shape: {data.shape}")  # (n_people, n_samples, n_channels, n_frequencies, n_times)
-    print(f"Final Labels Shape: {labels.shape}")  # (n_people, n_samples)
-
-# TODO daty pouzit kod z Thienova navrhu
+    print(f"Final Data Shape: {data.shape}")
+    print(f"Final Labels Shape: {labels.shape}")
 
 if __name__ == '__main__':
     main()
