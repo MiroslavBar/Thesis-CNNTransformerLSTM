@@ -5,7 +5,7 @@ from abc import ABC, abstractmethod
 import mne
 from mne.io import Raw
 
-from preprocessing.MovementType import MovementType
+from src.preprocessing.MovementType import MovementType
 
 
 class FileFormat(ABC):

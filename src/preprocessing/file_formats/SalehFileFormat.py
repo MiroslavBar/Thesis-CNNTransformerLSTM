@@ -1,8 +1,8 @@
 import os
 import re
 
-from preprocessing.MovementType import MovementType
-from preprocessing.file_formats.FileFormat import FileFormat
+from src.preprocessing.MovementType import MovementType
+from src.preprocessing.file_formats.FileFormat import FileFormat
 
 
 class SalehFileFormat(FileFormat):

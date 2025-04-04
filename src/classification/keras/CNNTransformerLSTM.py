@@ -22,7 +22,7 @@ from src.preprocessing.DataRepresentation import DataRepresentation
 from src.preprocessing.NDScaler import NDScaler
 from src.utils import file_manager
 
-R
+
 class CNNTransformerLSTM(KerasClassifier):
 
     def _create_model(self, input_shape: tuple, num_classes: int) -> Model:
@@ -66,7 +66,7 @@ class CNNTransformerLSTM(KerasClassifier):
 
         # Transformer Encoder Block
         def transformer_encoder_block(inputs, num_heads, key_dim, dropout_rate):
-        # Layer Normalization
+            # Layer Normalization
             normalized_input = LayerNormalization()(inputs)
 
             seq_length = tf.shape(inputs)[1]
