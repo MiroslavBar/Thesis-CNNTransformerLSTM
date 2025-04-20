@@ -1,41 +1,38 @@
-1. Download the dataset 
-Link: https://zenodo.org/record/7893847
+# EEG Classification Experiments
 
-2. Python
-Download and install Python version 3.10 (https://www.python.org/downloads/release/python-31011/).
+This repository contains code for training and evaluating a CNNTransformerLSTM for EEG signal classification. The model is designed to classify different types of motor execution (ME) and motor imagery (MI) tasks from EEG data.
 
-If you had a version of Python installed already, make sure you are using the correct version e.g.
-```
-~code>python --version
-Python 3.10.11
-```
-(Any Python 3.10 and higher version will most likely work, however during development only 3.10.11 was used)
+## Prerequisites
 
-Create a new Python virtual environment.
-```bash
-python -m venv venv
-```
-Activate the virtual environment.
+### Installation
 
-- On Windows 
-```
-venv\Scripts\activate
-```
-- On Linux
-```
-source venv/bin/activate
-```
-Install required Python packages from requirements.txt.
+The repository includes a `requirements.txt` file with all necessary dependencies. To install:
+
 ```bash
 pip install -r requirements.txt
 ```
 
-3. Run the project
-After you are done installing the project dependencies simply run the project using
+## Datasets
+
+The project contains two packages each of which contains script for training and testing using a respective dataset. In each package there is a .ini configuration file.
+For the Kodera-29 dataset, the original implementation has been preserved and is described in README_original.md file.
+
+## data availability
+- Shuqfa-103: https://data.mendeley.com/datasets/dpmtgrn8d8/4
+- Brunner-9: https://www.bbci.de/competition/iv/
+- Kodera-29: https://zenodo.org/records/7893847
+
+
+## Running the Experiments
+
+To run the experiment with the default configuration:
+
+
 ```bash
-python src/main.py [-f|--config_file <path_to_config>]
+python shuqfa103_train.py [-f|--config_file <path_to_config>]
 ```
 
-4. Configuration
-Configuration is done via a INI file (Or by modifying the source code itself if you so desire).
-Refer to the default *config.ini* file to see the different configuration options. 
+```bash
+python kodera29_train.py [-f|--config_file <path_to_config>]
+```
+
