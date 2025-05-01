@@ -6,6 +6,8 @@ This repository contains code for training and evaluating a CNNTransformerLSTM f
 
 ### Installation
 
+This project uses Python 3.10
+
 The repository includes a `requirements.txt` file with all necessary dependencies. To install:
 
 ```bash
